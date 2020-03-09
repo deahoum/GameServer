@@ -105,7 +105,7 @@ int main(int argc, _TCHAR* argv[])
 	::closesocket(listen_socket);
 	WSACleanup();
 	_tprintf(L"# End network base\n");
-    return 0;
+	return 0;
 }
 
 VOID CloseClient(SOCKET_DATA *socket)
@@ -161,6 +161,71 @@ DWORD WINAPI AcceptThread(LPVOID iocpHandler)
 		}
 
 		session->socket = acceptSocket;
+		IO_DATA ioData = session->ioData;
+		DWORD flags = 0;
+		DWORD recvBytes;
+		DWORD errorCode = WSARecv(session->socket, &(ioData.wsaBuf), 1, &recvBytes, &flags, &(ioData.overlapped), NULL);
+		if (errorCode == SOCKET_ERROR && (WSAGetLastError()) != ERROR_IO_PENDING)
+		{
+			CloseClient(session);
+		}
+	}
+
+	return 0;
+}
+
+DWORD WINAPI WorkerThread(LPVOID iocpHandler)
+{
+	HANDLE iocp = (HANDLE)iocpHandler;
+
+	while (true)
+	{
+		IO_DATA *ioData = NULL;
+		SOCKET_DATA *session = NULL;
+		DWORD trafficSize;
+
+		BOOL success = GetQueuedCompletionStatus(iocp, &trafficSize, (LPDWORD)&session, (LPOVERLAPPED*)&ioData, INFINITE);
+
+		if (!success)
+		{
+			_tprintf(L"# queue data getting fail\n");
+			continue;
+		}
+
+		if (session == NULL)
+		{
+			_tprintf(L"! socket data broken\n");
+		}
+
+		if (trafficSize == 0)
+		{
+			CloseClient(session);
+			continue;
+		}
+
+		ioData->currentBytes += trafficSize;
+		DWORD flags = 0;
+
+		switch (ioData->ioType)
+		{
+		case IO_WRITE:
+			ioData->wsaBuf.buf[trafficSize] = '\0';
+			_tprintf(L"@ send message : %s\n", ioData->wsaBuf.buf);
+			break;
+		case IO_READ:
+		{
+			ioData->ioType = IO_WRITE;
+			ioData->wsaBuf.len = trafficSize;
+			flags = 0;
+			DWORD sendBytes;
+			DWORD errorCode = WSASend(session->socket, &(ioData->wsaBuf), 1, &sendBytes, flags, &(ioData->overlapped), NULL);
+			if (errorCode == SOCKET_ERROR && (WSAGetLastError() != ERROR_IO_PENDING))
+			{
+				CloseClient(session);
+			}
+		}
+		break;
+		}
 	}
 
 	return 0;

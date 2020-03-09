@@ -81,6 +81,12 @@
     <ClInclude Include="Util\ThreadJobQueue.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Net\Server.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\IOCPServer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -126,6 +132,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Util\SMTPMail.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Server.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\IOCPServer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
