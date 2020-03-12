@@ -84,7 +84,10 @@
     <ClInclude Include="Net\Server.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Net\IOCPServer.h">
+    <ClInclude Include="Net\Iocp\IOCPSession.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Iocp\IOCPServer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -137,7 +140,10 @@
     <ClCompile Include="Net\Server.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Net\IOCPServer.cpp">
+    <ClCompile Include="Net\Iocp\IOCPServer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Iocp\IOCPSession.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

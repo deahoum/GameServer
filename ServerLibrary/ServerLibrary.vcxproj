@@ -148,7 +148,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Net\IOCPServer.h" />
+    <ClInclude Include="Net\Iocp\IOCPServer.h" />
+    <ClInclude Include="Net\Iocp\IOCPSession.h" />
     <ClInclude Include="Net\Server.h" />
     <ClInclude Include="ServerLibrary.h" />
     <ClInclude Include="Shutdown.h" />
@@ -171,7 +172,8 @@
     <ClInclude Include="Util\Util.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Net\IOCPServer.cpp" />
+    <ClCompile Include="Net\Iocp\IOCPServer.cpp" />
+    <ClCompile Include="Net\Iocp\IOCPSession.cpp" />
     <ClCompile Include="Net\Server.cpp" />
     <ClCompile Include="ServerLibrary.cpp" />
     <ClCompile Include="Shutdown.cpp" />
