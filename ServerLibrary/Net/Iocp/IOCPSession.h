@@ -46,7 +46,7 @@ public:
 
 private:
 	void Initialize();
-	void CheckError(DWORD ret);
+	void CheckErrorIO(DWORD ret);
 	void Recv(WSABUF wsaBuf);
 	bool IsRecving(size_t transferSize);
 	void Send(WSABUF wsaBuf);
